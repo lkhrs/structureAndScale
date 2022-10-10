@@ -45,32 +45,36 @@
 
 					return array;
 				}
-				
+
+				// helper to generate dice
+				function dice(d) {
+					return [...Array(d).keys()].slice(1);
+				}
+
+				// helper to shuffle and log result
+				function roll(array) {
+					shuffle(array);
+					let result = array[0];
+					console.log(result);
+				}
+
 				// roll the dice
 				function d4() {
-					let d4 = [1, 2, 3, 4];
-					shuffle(d4);
-					let result = d4[0];
-					console.log(result);
+					let d4 = dice(4);
+					roll(d4);
 				}
-				
+
 				function d6() {
-					let d6 = [1, 2, 3, 4, 5, 6];
-					shuffle(d6);
-					let result = d6[0];
-					console.log(result);
+					let d6 = dice(6);
+					roll(d6);
 				}
 				function d10() {
-					let d6 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-					shuffle(d6);
-					let result = d6[0];
-					console.log(result);
+					let d10 = dice(10);
+					roll(d10);
 				}
 				function d20() {
-					let d6 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-					shuffle(d6);
-					let result = d6[0];
-					console.log(result);
+					let d20 = dice(20);
+					roll(d20);
 				}
 
 				// return the functions
