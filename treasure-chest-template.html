@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Treasure Chest</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Treasure Chest</h1>
+
+		<p>All of the magic here happens in the console.</p>
+
+		<script>
+			let TreasureChest = (function () {
+				function Constructor() {
+					this.bronze = 0;
+					this.silver = 0;
+					this.gold = 0;
+				}
+				Constructor.prototype.addGold = function (n) {
+					this.gold = this.gold + n;
+				};
+				Constructor.prototype.addSilver = function (n) {
+					this.silver = this.silver + n;
+				};
+				Constructor.prototype.addBronze = function (n) {
+					this.bronze = this.bronze + n;
+				};
+				Constructor.prototype.getBooty = function () {
+					return `Ahoy, matey! Yer treasure chest \'as ${this.gold} gold, yer name must be Judas with ${this.silver} pieces o' silver, and yer lookin' mighty brassy wit' ${this.bronze} o' bronze.`;
+				};
+				return Constructor;
+			})();
+			let blackbeard = new TreasureChest();
+			blackbeard.addGold(5);
+			blackbeard.addSilver(10);
+			blackbeard.addBronze(15);
+			console.log(blackbeard.getBooty());
+		</script>
+	</body>
+</html>
