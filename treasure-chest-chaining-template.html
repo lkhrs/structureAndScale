@@ -1,91 +1,129 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Treasure Chest - Chaining & Static Methods</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<style type="text/css">
-			body {
-				margin: 0 auto;
-				max-width: 40em;
-				width: 88%;
+<head>
+	<meta charset="utf-8" />
+	<title>Treasure Chest - Chaining & Static Methods</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<style type="text/css">
+		body {
+			margin: 0 auto;
+			max-width: 40em;
+			width: 88%;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Treasure Chest - Chaining & Static Methods</h1>
+
+	<p>All of the magic here happens in the console.</p>
+
+	<script>
+		let TreasureChest = (function () {
+			/**
+			 * Create the constructor object
+			 */
+			function Constructor() {
+				this.bronze = 0;
+				this.silver = 0;
+				this.gold = 0;
 			}
-		</style>
-	</head>
-	<body>
 
-		<h1>Treasure Chest - Chaining & Static Methods</h1>
+			/**
+			 * Randomly shuffle an array
+			 * https://stackoverflow.com/a/2450976/1293256
+			 * @param  {Array} array The array to shuffle
+			 * @return {Array}       The shuffled array
+			 */
+			function shuffle(array) {
+				let currentIndex = array.length;
+				let temporaryValue, randomIndex;
 
-		<p>All of the magic here happens in the console.</p>
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+					// Pick a remaining element...
+					randomIndex = Math.floor(Math.random() * currentIndex);
+					currentIndex -= 1;
 
-
-		<script>
-			let TreasureChest = (function () {
-
-				/**
-				 * Create the constructor object
-				 */
-				function Constructor () {
-					this.bronze = 0;
-					this.silver = 0;
-					this.gold = 0;
+					// And swap it with the current element.
+					temporaryValue = array[currentIndex];
+					array[currentIndex] = array[randomIndex];
+					array[randomIndex] = temporaryValue;
 				}
 
-				/**
-				 * Add bronze to the treasure chest
-				 * @param {Number} n The amount to add
-				 */
-				Constructor.prototype.addBronze = function (n) {
-					this.bronze += n;
-					return this.bronze;
-				};
+				return array;
+			}
 
-				/**
-				 * Add silver to the treasure chest
-				 * @param {Number} n The amount to add
-				 */
-				Constructor.prototype.addSilver = function (n) {
-					this.silver += n;
-					return this.silver;
-				};
+			// Generate array from 1 to n
+			function genArray(n) {
+				return [...Array(n).keys()].slice(1);
+			};
 
-				/**
-				 * Add gold to the treasure chest
-				 * @param {Number} n The amount to add
-				 */
-				Constructor.prototype.addGold = function (n) {
-					this.gold += n;
-					return this.gold;
-				};
+			/**
+			 * Add bronze to the treasure chest
+			 * @param {Number} n The amount to add
+			 */
+			Constructor.prototype.addBronze = function (n) {
+				this.bronze += n;
+				return this;
+			};
 
-				/**
-				 * Get the total amount of loot as a string
-				 * @return {String} The total amount of loot
-				 */
-				Constructor.prototype.getLoot = function () {
-					return `You have ${this.gold} gold, ${this.silver} silver, and ${this.bronze} bronze.`;
-				};
+			/**
+			 * Add silver to the treasure chest
+			 * @param {Number} n The amount to add
+			 */
+			Constructor.prototype.addSilver = function (n) {
+				this.silver += n;
+				return this;
+			};
 
-				return Constructor;
+			/**
+			 * Add gold to the treasure chest
+			 * @param {Number} n The amount to add
+			 */
+			Constructor.prototype.addGold = function (n) {
+				this.gold += n;
+				return this;
+			};
 
-			})();
+			/**
+			 * Get the total amount of loot as a string
+			 * @return {String} The total amount of loot
+			 */
+			Constructor.getLoot = function () {
+				return `You have ${this.gold} gold, ${this.silver} silver, and ${this.bronze} bronze.`;
+			};
 
-			// Create instances
-			let captain = new TreasureChest();
-			let firstMate = new TreasureChest();
+			Constructor.getRandomLoot = function () {
+				let amount = genArray(420);
+				let metals = ['gold', 'silver', 'bronze'];
 
-			// Add loot
-			captain.addGold(12);
-			captain.addSilver(4);
+				shuffle(amount);
+				shuffle(metals);
 
-			// Get loot
-			let bronze = captain.bronze;
-			let silver = captain.silver;
-			let gold = captain.gold;
-			let total = captain.getLoot();
+				return {
+					amount: amount[0],
+					metals: metals[0]
+				}
+			};
 
-			console.log(bronze, silver, gold, total);
-		</script>
-	</body>
+			return Constructor;
+		})();
+
+		// Create instances
+		let captain = new TreasureChest();
+		let firstMate = new TreasureChest();
+
+		// Assign loot
+		let ledger = captain.addBronze(42).addSilver(69).addGold(420);
+		console.log(ledger);
+
+		// Randomize loot values
+		let bewitchedLedger = TreasureChest.getRandomLoot();
+		console.log(bewitchedLedger);
+	</script>
+</body>
+
 </html>
