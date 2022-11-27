@@ -49,7 +49,7 @@ self.addEventListener("fetch", function (event) {
   }
   // Other assets (cache first)
   if (
-    request.headers.get("Accept").includes("text/javascript") ||
+    request.headers.get("Accept").includes("application/javascript") ||
     request.headers.get("Accept").includes("text/css")
   ) {
     event.respondWith(
